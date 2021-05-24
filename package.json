@@ -1,0 +1,41 @@
+{
+  "name": "wall-partition-assemble",
+  "version": "1.0.0",
+  "description": "App to manage materials order needed to build the partition wall of given length",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiktorkujawa/wall-partition-assemble.git"
+  },
+  "keywords": [],
+  "author": "Wiktor Kujawa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wiktorkujawa/wall-partition-assemble/issues"
+  },
+  "homepage": "https://github.com/wiktorkujawa/wall-partition-assemble#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "jest": "^26.6.3",
+    "prettier": "^2.3.0",
+    "ts-jest": "^26.5.6",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.2.4"
+  }
+}
