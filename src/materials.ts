@@ -8,10 +8,10 @@ interface IMaterials {
     Insulated?: any;
   };
   fixings: {
-    waferHeadScrews: number,
-    nailablePlugs: number,
-    highThreadScrews: number,
-    selfTapingSrews: number
+    waferHeadScrews?: number,
+    nailablePlugs?: number,
+    highThreadScrews?: number,
+    selfTapingSrews?: number
   }
 }
 
