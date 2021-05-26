@@ -8,11 +8,11 @@ interface IMaterials {
     Insulated?: any;
   };
   fixings: {
-    waferHeadScrews?: number,
-    nailablePlugs?: number,
-    highThreadScrews?: number,
-    selfTapingSrews?: number
-  }
+    waferHeadScrews?: number;
+    nailablePlugs?: number;
+    highThreadScrews?: number;
+    selfTapingSrews?: number;
+  };
 }
 
 const materials: IMaterials = {
@@ -41,7 +41,7 @@ const materials: IMaterials = {
           width: 3.6,
           quantity: 0,
         },
-      }
+      },
     },
     Aluminium: {
       uTracks: {
@@ -67,7 +67,7 @@ const materials: IMaterials = {
           width: 3.6,
           quantity: 0,
         },
-      }
+      },
     },
   },
   plasterBoards: {
