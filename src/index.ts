@@ -24,27 +24,27 @@ export const calculateOrder = (
   materials.plasterBoards = materials.plasterBoards[plasterBoardType];
   materials.metalFrames = materials.metalFrames[metalFrameMaterial];
 
-  materials.fixings.waferHeadScrews = 0;
-  materials.fixings.nailablePlugs = 0;
-  materials.fixings.highThreadScrews = 0;
+  materials.fixings.waferHeadScrews.quantity = 0;
+  materials.fixings.nailablePlugs.quantity = 0;
+  materials.fixings.highThreadScrews.quantity = 0;
 
   // Connecting bottom track to floor
   floorMaterial === 'Lumber'
-    ? (materials.fixings.waferHeadScrews += Math.ceil(wallLength / 2) + 1)
-    : (materials.fixings.nailablePlugs += Math.ceil(wallLength / 2) + 1);
+    ? (materials.fixings.waferHeadScrews.quantity += Math.ceil(wallLength / 2) + 1)
+    : (materials.fixings.nailablePlugs.quantity += Math.ceil(wallLength / 2) + 1);
 
   // Connecting first stud to wall
   connectedWallMaterial === 'Lumber'
-    ? (materials.fixings.highThreadScrews += Math.ceil(wallHeight / 2))
-    : (materials.fixings.nailablePlugs += Math.ceil(wallHeight / 2));
+    ? (materials.fixings.highThreadScrews.quantity += Math.ceil(wallHeight / 2))
+    : (materials.fixings.nailablePlugs.quantity += Math.ceil(wallHeight / 2));
 
   // Connecting upper track to ceiling
   ceilingMaterial === 'Lumber'
-    ? (materials.fixings.highThreadScrews += Math.ceil(wallLength / 2) + 1)
-    : (materials.fixings.nailablePlugs += Math.ceil(wallLength / 2) + 1);
+    ? (materials.fixings.highThreadScrews.quantity += Math.ceil(wallLength / 2) + 1)
+    : (materials.fixings.nailablePlugs.quantity += Math.ceil(wallLength / 2) + 1);
 
   // Connecting last stud to both tracks
-  materials.fixings.waferHeadScrews += 4;
+  materials.fixings.waferHeadScrews.quantity += 4;
 
   const boards = calculateBoards(wallLength, wallHeight);
 
@@ -60,19 +60,23 @@ export const calculateOrder = (
     {
       name: boards[0][0],
       quantity: boards[0][1].quantity,
+      image: boards[0][1].image,
     },
     {
       name: stoods[0][0],
       quantity: stoods[0][1].quantity,
+      image: stoods[0][1].image,
     },
     {
       name: tracks[0][0],
       quantity: tracks[0][1].quantity,
+      image: tracks[0][1].image,
     },
   ];
 
   Object.entries(materials.fixings).map((screws) => {
-    if (screws[1] !== 0) firstChoice.push({ name: screws[0], quantity: screws[1] });
+    if (screws[1].quantity !== 0)
+      firstChoice.push({ name: screws[0], quantity: screws[1].quantity, image: screws[1].image });
   });
 
   return firstChoice;
@@ -175,7 +179,7 @@ const calculateStoodsAndTapingScrews = (boards: any, wallHeight: number) => {
     numberOfStoods = 3;
   }
 
-  materials.fixings.selfTapingSrews =
+  materials.fixings.selfTapingSrews.quantity =
     2 * ((numberOfStoods - 2) * 2 * wallHeight + (2 + numberOfStoods - 1) * wallHeight);
 
   return newStoods;
