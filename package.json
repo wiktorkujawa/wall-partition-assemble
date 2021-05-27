@@ -1,6 +1,6 @@
 {
   "name": "wall-partition-assemble",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "App to manage materials order needed to build the partition wall of given length",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
