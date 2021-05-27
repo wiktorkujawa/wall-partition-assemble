@@ -179,7 +179,9 @@ const calculateStoodsAndTapingScrews = (boards: IBoard[], wallHeight: number) =>
   }
 
   materials.fixings.selfTapingSrews.quantity =
-    2 * ((numberOfStoods - 2) * 2 * wallHeight + (2 + numberOfStoods - 1) * wallHeight);
+    4 * wallHeight +
+    Math.floor((numberOfStoods - 2) / 2) * 4 * wallHeight +
+    (Math.floor((numberOfStoods - 2) / 2) + 1) * 2 * wallHeight;
 
   return newStoods;
 };
