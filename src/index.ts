@@ -49,7 +49,7 @@ export const calculateOrder = (
   const boards = calculateBoards(wallLength, wallHeight);
 
   if (!boards) {
-    return 'Theres no boards for that high wall';
+    return [];
   }
 
   const stoods = calculateStoodsAndTapingScrews(boards, wallHeight);
