@@ -1,7 +1,7 @@
 {
   "name": "wall-partition-assemble",
   "version": "1.0.3",
-  "description": "App to manage materials order needed to build the partition wall of given length",
+  "description": "Library to manage materials order needed to build the partition wall of given length",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git+https://github.com/wiktorkujawa/wall-partition-assemble.git"
   },
-  "keywords": [],
+  "keywords": ["wall", "partition", "metal","frames","stoods","tracks","building"],
   "author": "Wiktor Kujawa",
   "license": "ISC",
   "bugs": {
