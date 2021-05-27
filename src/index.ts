@@ -1,12 +1,7 @@
 import initMaterials from './materials';
+import { IBoard, ImaterialType, ImetalMaterial, IplasterBoardType, ITrack } from './types';
 
 let materials = { ...initMaterials };
-
-type IplasterBoardType = 'Standard' | 'Insulated';
-
-type ImetalMaterial = 'Steel' | 'Aluminium';
-
-type ImaterialType = 'Lumber' | 'Concrete';
 
 export const calculateOrder = (
   wallLength: number,
@@ -83,7 +78,7 @@ export const calculateOrder = (
 };
 
 const chooseTracks = (wallLength: number) => {
-  let chosenTracks: any = Object.entries(Object.entries(materials.metalFrames)[0][1]);
+  let chosenTracks: ITrack[] = Object.entries(Object.entries(materials.metalFrames)[0][1]);
 
   let minimumTracks = Number.MAX_SAFE_INTEGER;
 
@@ -96,19 +91,19 @@ const chooseTracks = (wallLength: number) => {
     }
   });
 
-  chosenTracks = chosenTracks.filter((track: any) => track[1].quantity === minimumTracks);
+  chosenTracks = chosenTracks.filter((track: ITrack) => track[1].quantity === minimumTracks);
 
   return chosenTracks;
 };
 
 const calculateBoards = (wallLength: number, wallHeight: number) => {
-  let chosenBoards: any = Object.entries(materials.plasterBoards);
+  let chosenBoards: IBoard[] = Object.entries(materials.plasterBoards);
 
   let index = 0;
 
   // Removing too short boards
 
-  chosenBoards.sort((board1: any, board2: any) => board1[1].height - board2[1].height);
+  chosenBoards.sort((board1: IBoard, board2: IBoard) => board1[1].height - board2[1].height);
 
   while (chosenBoards[index][1].height < wallHeight) {
     index++;
@@ -120,7 +115,7 @@ const calculateBoards = (wallLength: number, wallHeight: number) => {
   chosenBoards = chosenBoards.splice(index);
 
   // Keeping the most optimal boards
-  chosenBoards = chosenBoards.filter((length: any) => length[1].height === chosenBoards[0][1].height);
+  chosenBoards = chosenBoards.filter((board: IBoard) => board[1].height === chosenBoards[0][1].height);
 
   // Calculating number of boards
   let minimumBoards = Number.MAX_SAFE_INTEGER;
@@ -144,33 +139,37 @@ const calculateBoards = (wallLength: number, wallHeight: number) => {
   });
 
   // Keeping the smallest amount options
-  chosenBoards = chosenBoards.filter((board: any) => board[1].quantity === minimumBoards);
+  chosenBoards = chosenBoards.filter((board: IBoard) => board[1].quantity === minimumBoards);
   return chosenBoards;
 };
 
-const calculateStoodsAndTapingScrews = (boards: any, wallHeight: number) => {
-  let chosenStoods: any = Object.entries(Object.entries(materials.metalFrames)[1][1]);
+const calculateStoodsAndTapingScrews = (boards: IBoard[], wallHeight: number) => {
+  let chosenStoods: ITrack[] = Object.entries(Object.entries(materials.metalFrames)[1][1]);
 
   // Removing too short stoods
-  chosenStoods = chosenStoods.filter((stood: any) => stood[1].length >= wallHeight);
+  chosenStoods = chosenStoods.filter((stood: ITrack) => stood[1].length >= wallHeight);
 
+  let chosenStood: ITrack;
   // Keeping most optimal stood type
   if (chosenStoods.length > 1) {
     let optimalStoodLength = chosenStoods[0][1].length;
-    chosenStoods = chosenStoods.reduce((acc: any, stood: any) => {
+    chosenStood = chosenStoods.reduce((acc: any, stood: any) => {
       if (optimalStoodLength >= stood[1].length) {
         optimalStoodLength = stood[1].length;
         return (acc = stood);
       }
     }, []);
   }
+  if (chosenStoods.length === 1) {
+    chosenStood = chosenStoods[0];
+  }
 
   // Creating array of stoods with length of boards options
-  const newStoods: any[] = [];
+  const newStoods: ITrack[] = [];
   let numberOfStoods = boards[0][1].quantity + 1;
-  boards.map((board: any, index: number) => {
+  boards.map((board: IBoard, index: number) => {
     numberOfStoods = board[1].quantity + 1;
-    newStoods.push(chosenStoods);
+    newStoods.push(chosenStood);
     newStoods[index][1].quantity = numberOfStoods;
   });
 
